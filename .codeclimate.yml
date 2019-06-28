@@ -50,4 +50,4 @@ exclude_patterns:
     - "**/vendor/"
     - "**/*.d.ts"
     - "**/*.test.ts"
-    - "server/src/migrations/*.ts"
+    - "src/migrations/*.ts"
