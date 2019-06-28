@@ -1,0 +1,53 @@
+version: "2"
+checks:
+    argument-count:
+        enabled: true
+        config:
+            threshold: 5
+    complex-logic:
+        enabled: true
+        config:
+            threshold: 7
+    file-lines:
+        enabled: true
+        config:
+            threshold: 250
+    method-complexity:
+        enabled: true
+        config:
+            threshold: 7
+    method-count:
+        enabled: true
+        config:
+            threshold: 20
+    method-lines:
+        enabled: true
+        config:
+            threshold: 40
+    nested-control-flow:
+        enabled: true
+        config:
+            threshold: 7
+    return-statements:
+        enabled: true
+        config:
+            threshold: 5
+    similar-code:
+        enabled: false
+    identical-code:
+        enabled: false
+plugins:
+    nodesecurity:
+        enabled: true
+    tslint:
+        enabled: true
+exclude_patterns:
+    - "config/"
+    - "**/dist/"
+    - "features/"
+    - "node_modules/"
+    - "**/tests/"
+    - "**/vendor/"
+    - "**/*.d.ts"
+    - "**/*.test.ts"
+    - "server/src/migrations/*.ts"

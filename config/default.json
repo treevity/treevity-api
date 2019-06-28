@@ -1,0 +1,21 @@
+{
+    "server": {
+        "host": "localhost",
+        "port": 3001
+    },
+    "client": {
+        "host": "localhost",
+        "port": 3000
+    },
+    "db": {
+        "type": "mysql",
+        "host": "localhost",
+        "port": 3306,
+        "username": "root",
+        "password": "",
+        "database": "treevity",
+        "synchronize": false,
+        "logging": false
+    },
+    "jwtSecret": "mySuperSecret"
+}

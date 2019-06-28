@@ -1,0 +1,6 @@
+{
+    "db": {
+        "database": "treevity_test",
+        "synchronize": true
+    }
+}
