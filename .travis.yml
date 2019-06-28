@@ -11,6 +11,5 @@ install:
 before_script:
     - yarn lint
     - yarn typeorm migration:run
-    - yarn build
 script:
     - yarn test
