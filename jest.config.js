@@ -3,6 +3,10 @@ module.exports = {
         "ts",
         "js"
     ],
+    moduleNameMapper: {
+        "^@root/(.*)$": "<rootDir>/$1",
+        "^@modules/(.*)$": "<rootDir>/src/modules/$1"
+    },
     rootDir: "./",
     testRegex: "(/tests/.*|(\\.|/)(test|spec))\\.(js|ts)$",
     transform: {

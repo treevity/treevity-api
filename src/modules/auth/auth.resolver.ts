@@ -1,14 +1,15 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { LoginDTO } from './dtos/login.dto';
+import { LoginRO } from '@modules/auth/dtos/login.ro';
 import { User } from '@modules/users/interfaces/user.interface';
 
-@Controller('auth')
-export class AuthController {
+@Resolver()
+export class AuthResolver {
     constructor(private readonly authService: AuthService) {}
 
-    @Post('login')
-    async login(@Body() payload: LoginDTO): Promise<{ accessToken, expiresIn }> {
+    @Mutation(returns => LoginRO)
+    async login(@Args('loginData') payload: LoginDTO): Promise<LoginRO> {
         const user: User = { ...payload };
         return await this.authService.login(user);
     }

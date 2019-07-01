@@ -14,14 +14,18 @@
     "dependencies": {
         "@nestjs/common": "^6.0.0",
         "@nestjs/core": "^6.0.0",
+        "@nestjs/graphql": "^6.2.4",
         "@nestjs/jwt": "^6.1.1",
         "@nestjs/passport": "^6.1.0",
         "@nestjs/platform-express": "^6.0.0",
         "@nestjs/typeorm": "^6.1.2",
+        "apollo-server-express": "^2.6.7",
         "bcrypt": "^3.0.6",
         "class-transformer": "^0.2.3",
         "class-validator": "^0.9.1",
         "config": "^3.1.0",
+        "graphql": "^14.4.1",
+        "graphql-tools": "^4.0.5",
         "jest": "^24.8.0",
         "lodash": "^4.17.11",
         "mysql2": "^1.6.5",
@@ -32,6 +36,7 @@
         "rxjs": "^6.3.3",
         "ts-jest": "^24.0.2",
         "tslint-config-airbnb": "^5.11.1",
+        "type-graphql": "^0.17.4",
         "typeorm": "^0.2.18"
     },
     "devDependencies": {
