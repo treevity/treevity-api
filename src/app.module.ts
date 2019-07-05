@@ -11,7 +11,7 @@ import { UsersModule } from '@modules/users/users.module';
         UsersModule,
         GraphQLModule.forRoot({
             autoSchemaFile: 'schema.gql',
-            debug: false,
+            debug: true,
             playground: true,
             context: ({ req }) => ({ req })
         })

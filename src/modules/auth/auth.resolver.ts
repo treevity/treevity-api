@@ -13,4 +13,10 @@ export class AuthResolver {
         const user: User = { ...payload };
         return await this.authService.login(user);
     }
+
+    @Mutation(returns => Boolean)
+    async logout(): Promise<Boolean> {
+        // TODO: add user's token to black list
+        return true;
+    }
 }

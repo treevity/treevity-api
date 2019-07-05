@@ -23,6 +23,7 @@ type LoginRO {
 type Mutation {
   createUser(createUserData: CreateUserDTO!): UserRO!
   login(loginData: LoginDTO!): LoginRO!
+  logout: Boolean!
 }
 
 type Query {
