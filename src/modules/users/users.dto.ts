@@ -1,5 +1,6 @@
 import { IsEmail, Length } from 'class-validator';
 import { Field, ObjectType, InputType, ID } from 'type-graphql';
+import { RoleRO } from '@modules/roles/roles.dto';
 
 @InputType()
 export class CreateUserDTO {
@@ -24,10 +25,16 @@ export class CreateUserDTO {
 export class UserRO {
     @Field(type => ID)
     readonly id: number;
+
     @Field(type => String)
     readonly firstName: string;
+
     @Field(type => String)
     readonly surname: string;
+
     @Field(type => String)
     readonly email: string;
+
+    @Field(type => [RoleRO], { nullable: true })
+    readonly roles?: RoleRO[];
 }

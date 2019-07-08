@@ -9,7 +9,9 @@
         "dev": "nodemon",
         "lint": "tslint -p tsconfig.json -c tslint.json",
         "test": "jest -c=./jest.config.js",
-        "typeorm": "node tsnode-typeorm"
+        "typeorm": "node tsnode-typeorm",
+        "database:seed": "ts-node -r tsconfig-paths/register src/database/seeds",
+        "database:prepare": "npm run typeorm schema:drop && npm run typeorm migration:run && npm run database:seed"
     },
     "dependencies": {
         "@nestjs/common": "^6.0.0",

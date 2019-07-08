@@ -11,7 +11,9 @@
         "baseUrl": "./",
         "paths": {
             "@root/*": ["./*"],
-            "@modules/*": ["./src/modules/*"]
+            "@modules/*": ["./src/modules/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@helpers/*": ["./src/helpers/*"]
         },
         "types": [
             "@types/jest",

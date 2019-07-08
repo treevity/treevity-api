@@ -5,7 +5,6 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '@modules/users/entities';
 import { UsersService } from '@modules/users/users.service';
 import { User as UserInterface } from '@modules/users/interfaces/user.interface';
-import { UserRO } from '@modules/users/users.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
