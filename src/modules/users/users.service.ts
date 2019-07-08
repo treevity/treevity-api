@@ -2,10 +2,13 @@ import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
 import {
     Injectable,
-    InternalServerErrorException
+    InternalServerErrorException,
+    BadRequestException
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RolesService } from '@modules/roles/roles.service';
+import { constants } from '@utils/helpers/roles.helper';
 import { User } from './entities';
 import { User as UserInterface } from './interfaces/user.interface';
 import { UserRO } from './users.dto';
@@ -13,7 +16,8 @@ import { UserRO } from './users.dto';
 @Injectable()
 export class UsersService {
     constructor(
-        @InjectRepository(User) private readonly usersRepository: Repository<User>
+        @InjectRepository(User) private readonly usersRepository: Repository<User>,
+        private readonly rolesService: RolesService
     ) {}
 
     async create(user: UserInterface): Promise<UserRO> {
@@ -22,6 +26,7 @@ export class UsersService {
             newUser.password = await bcrypt.hash(user.password, 10);
 
             await this.usersRepository.save(newUser);
+            await this.assignRole(newUser, constants.USER);
             return _.omit(newUser, ['password']);
         } catch (error) {
             throw new InternalServerErrorException(error.message);
@@ -30,7 +35,9 @@ export class UsersService {
 
     async findAll(): Promise<UserRO[]> {
         try {
-            const users = await this.usersRepository.find();
+            const users = await this.usersRepository.find({
+                relations: ['roles']
+            });
             return users.map(user => _.omit(user, ['password']));
         } catch (error) {
             throw new InternalServerErrorException(error.message);
@@ -39,7 +46,11 @@ export class UsersService {
 
     async findByID(id: number): Promise<UserRO> {
         try {
-            const user = await this.usersRepository.findOne(id);
+            const user = await this.usersRepository.findOne({
+                where: { id },
+                relations: ['roles']
+            });
+
             return _.omit(user, ['password']);
         } catch (error) {
             throw new InternalServerErrorException(error.message);
@@ -48,13 +59,35 @@ export class UsersService {
 
     async findByEmail(email: string, withPass: boolean = false): Promise<User> {
         try {
-            let user: any = await this.usersRepository.findOne({ email });
+            let user: any = await this.usersRepository.findOne({
+                where: { email },
+                relations: ['roles']
+            });
 
             if (!withPass) {
                 user = _.omit(user, ['password']);
             }
 
             return user;
+        } catch (error) {
+            throw new InternalServerErrorException(error.message);
+        }
+    }
+
+    async assignRole(user: User, roleName: string): Promise<any> {
+        try {
+            const role = await this.rolesService.findByName(roleName);
+
+            if (!role) {
+                return new BadRequestException('Role not found.');
+            }
+
+            if (!user.roles) {
+                user.roles = [];
+            }
+
+            user.roles.push(role);
+            await this.usersRepository.save(user);
         } catch (error) {
             throw new InternalServerErrorException(error.message);
         }

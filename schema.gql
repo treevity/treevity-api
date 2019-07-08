@@ -31,9 +31,15 @@ type Query {
   currentUser: UserRO!
 }
 
+type RoleRO {
+  id: ID!
+  name: String!
+}
+
 type UserRO {
   id: ID!
   firstName: String!
   surname: String!
   email: String!
+  roles: [RoleRO!]
 }
