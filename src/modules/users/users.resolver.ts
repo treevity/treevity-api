@@ -1,6 +1,9 @@
 import { BadRequestException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from '@modules/auth/guards/auth.guard';
+import { RolesGuard } from '@modules/roles/guards/roles.guard';
+import { Roles } from '@modules/roles/roles.decorator';
+import { constants as rolesConstants } from '@utils/helpers/roles.helper';
 import { UsersService } from './users.service';
 import { CreateUserDTO, UserRO } from './users.dto';
 import { User as CurrentUser } from './users.decorator';
@@ -16,7 +19,8 @@ export class UsersResolver {
         return this.usersService.create(user);
     }
 
-    @UseGuards(GqlAuthGuard)
+    @UseGuards(GqlAuthGuard, RolesGuard)
+    @Roles(rolesConstants.ADMIN)
     @Query(returns => [UserRO])
     async allUsers(): Promise<UserRO[]> {
         const users = await this.usersService.findAll();
