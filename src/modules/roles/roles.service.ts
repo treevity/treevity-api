@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import {
     Injectable,
     InternalServerErrorException
@@ -12,9 +13,14 @@ export class RolesService {
         @InjectRepository(Role) private readonly rolesRepository: Repository<Role>
     ) {}
 
-    async findByName(name: string): Promise<Role> {
+    async findByName(name: string | string[]): Promise<Role[]> {
         try {
-            return await this.rolesRepository.findOne({ name });
+            const names = (Array.isArray(name)) ? _.uniq(name) : [name];
+
+            return await this.rolesRepository
+                .createQueryBuilder('roles')
+                .where('roles.name IN (:names)', { names })
+                .getMany();
         } catch (error) {
             throw new InternalServerErrorException(error.message);
         }

@@ -26,7 +26,7 @@ export class UsersService {
             newUser.password = await bcrypt.hash(user.password, 10);
 
             await this.usersRepository.save(newUser);
-            await this.assignRole(newUser, constants.USER);
+            await this.assignRole(newUser, [constants.USER]);
             return _.omit(newUser, ['password']);
         } catch (error) {
             throw new InternalServerErrorException(error.message);
@@ -74,19 +74,22 @@ export class UsersService {
         }
     }
 
-    async assignRole(user: User, roleName: string): Promise<any> {
+    async assignRole(user: User, rolesName: string | string[]): Promise<any> {
         try {
-            const role = await this.rolesService.findByName(roleName);
+            const roles = await this.rolesService.findByName(rolesName);
 
-            if (!role) {
-                return new BadRequestException('Role not found.');
+            if (!roles || !roles.length) {
+                return new BadRequestException('Role(s) not found.');
             }
 
             if (!user.roles) {
                 user.roles = [];
             }
 
-            user.roles.push(role);
+            for (const role of roles) {
+                user.roles.push(role);
+            }
+
             await this.usersRepository.save(user);
         } catch (error) {
             throw new InternalServerErrorException(error.message);
