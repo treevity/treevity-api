@@ -20,12 +20,4 @@ export class RolesGuard implements CanActivate {
 
         return user && user.roles && hasRole();
     }
-
-    handleRequest(err: any, user: any) {
-        console.log(user);
-        if (err || !user) {
-            throw err || new UnauthorizedException();
-        }
-        return user;
-    }
 }
