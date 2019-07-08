@@ -12,9 +12,9 @@ module.exports = {
     "logging": db.logging || false,
     "entities": ["src/**/*.entity.ts"],
     "migrationsTableName": "custom_migration_table",
-    "migrations": ["src/migrations/*.ts"],
+    "migrations": ["src/database/migrations/*.ts"],
     "cli": {
         "entitiesDir": "src/**/*.entity.ts",
-        "migrationsDir": "src/migrations"
+        "migrationsDir": "src/database/migrations"
     },
 };
