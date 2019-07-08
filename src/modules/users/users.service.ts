@@ -95,4 +95,16 @@ export class UsersService {
             throw new InternalServerErrorException(error.message);
         }
     }
+
+    async removeRole(user: User, rolesName: string | string[]): Promise<any> {
+        try {
+            if (user.roles && user.roles.length) {
+                const roles = Array.isArray(rolesName) ? rolesName : [rolesName];
+                user.roles = user.roles.filter(role => !roles.includes(role.name));
+            }
+            await this.usersRepository.save(user);
+        } catch (error) {
+            throw new InternalServerErrorException(error.message);
+        }
+    }
 }
